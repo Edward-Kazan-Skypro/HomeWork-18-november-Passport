@@ -73,6 +73,15 @@ public class Passport {
 
         static Map<Integer, Passport> passportStorage = new HashMap<>();
 
+        static public void findByNumber(int number) {
+            if (passportStorage.containsKey(number)) {
+                System.out.println("Найден паспорт с таким номером:");
+                System.out.println(passportStorage.get(number));
+            } else {
+                System.out.println("Паспорт с таким номером не найден");
+            }
+        }
+
         static public void addPassport(Passport passport) {
             int passportNumber = passport.getNumber();
             System.out.println("Добавляем в список паспорт с номером " + passportNumber);
@@ -81,24 +90,27 @@ public class Passport {
                 passportStorage.put(passport.getNumber(), passport);
                 System.out.println("Паспорт добавлен в список");
                 System.out.println("Список после добавления паспорта " + passportStorage);
+                System.out.println("---------------------------------------------------------");
             } else {
                 System.out.println("Паспорт с таким номером уже есть в списке");
-                System.out.println("Обновим значения полей");
+
                 //Если паспорт с таким номером уже есть в списке, то надо обновить поля этого паспорта
                 //получим паспорт из списка по номеру паспорта
                 Passport bufferPassport = passportStorage.get(passportNumber);
-                //Обновим поля
-                //Почему входящий объект Passport имеет нулевые поля, кроме номера паспорта?
-                System.out.println(passport.getFirstName());//почему null????????????
-                System.out.println("---------------------------------------------------------");
+                System.out.println("Вот этот паспорт:");
+                System.out.println(bufferPassport);
+                System.out.println("Обновим значения его полей");
+
+                //Обновим поля - возьмем имя, и год рождения из входящего объект Passport
+                //и обновим поля буфферного паспорта
                 bufferPassport.setFirstName(passport.getFirstName());
                 bufferPassport.setSecondName(passport.getSecondName());
                 bufferPassport.setPatronymic(passport.getPatronymic());
                 bufferPassport.setYearOfBirth(passport.getYearOfBirth());
-                System.out.println("Паспортные данные после редактирования:");
-                System.out.println(bufferPassport);
                 //Положим обновленный паспорт опять в список
                 passportStorage.put(passportNumber, bufferPassport);
+                System.out.println("Обновленный паспорт добавлен в список");
+                System.out.println("---------------------------------------------------------");
             }
         }
     }
