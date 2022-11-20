@@ -39,6 +39,6 @@ public class Main {
         System.out.println("Список паспортов:");
         System.out.println(Passport.PassportStorage.passportStorage);
         System.out.println("----------------------------------------------------------");
-        Passport.PassportStorage.findByNumber(1234567890);
+        System.out.println(Passport.PassportStorage.findByNumber(1));
     }
 }

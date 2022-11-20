@@ -1,3 +1,5 @@
+import org.jetbrains.annotations.NotNull;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -5,8 +7,8 @@ import java.util.Objects;
 public class Passport {
 
     private final int number;
-    private String firstName;
-    private String secondName;
+    @NotNull private String firstName = getFirstName();
+    @NotNull private String secondName = getSecondName();
     private String patronymic = "отсутствует";
     private int yearOfBirth;
 
@@ -14,11 +16,11 @@ public class Passport {
         this.number = number;
     }
 
-    public void setFirstName(String firstName) {
+    public void setFirstName(@NotNull String firstName) {
         this.firstName = firstName;
     }
 
-    public void setSecondName(String secondName) {
+    public void setSecondName(@NotNull String secondName) {
         this.secondName = secondName;
     }
 
@@ -34,12 +36,18 @@ public class Passport {
         return number;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public @NotNull String getFirstName() {
+        if (firstName != null) {
+            return firstName;
+        }
+        return "имя не указано";
     }
 
-    public String getSecondName() {
-        return secondName;
+    public @NotNull String getSecondName() {
+        if (secondName != null) {
+            return secondName;
+        }
+        return "фамилия не указана";
     }
 
     public String getPatronymic() {
@@ -73,13 +81,15 @@ public class Passport {
 
         static Map<Integer, Passport> passportStorage = new HashMap<>();
 
-        static public void findByNumber(int number) {
+        static public Passport findByNumber(int number) {
             if (passportStorage.containsKey(number)) {
                 System.out.println("Найден паспорт с таким номером:");
                 System.out.println(passportStorage.get(number));
             } else {
                 System.out.println("Паспорт с таким номером не найден");
+                return null;
             }
+            return passportStorage.get(number);
         }
 
         static public void addPassport(Passport passport) {
